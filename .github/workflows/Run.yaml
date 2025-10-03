@@ -1,0 +1,41 @@
+name: Linting, Testing, Building
+on: push
+
+jobs:
+  Linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Setup environment
+        uses: actions/setup-node@v4
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps  
+      - name: Run Linting Rules
+        run: exec lint
+
+  Testing:
+    needs: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Setup environment
+        uses: actions/setup-node@v4
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps
+      - name: Run Unit Tests
+        run: exec test
+
+  Building:
+    needs: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Setup environment
+        uses: actions/setup-node@v4
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps
+      - name: Run Build
+        run: exec build  
