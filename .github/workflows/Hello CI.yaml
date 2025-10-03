@@ -2,7 +2,7 @@ name: "Hello CI"
 on: push
 
 jobs:
-  Linting:
+  echo-test:
     runs-on: ubuntu-latest
     steps:
       - name: print hello
